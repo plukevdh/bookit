@@ -18,8 +18,13 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
+  # output
   s.add_dependency("prawn")
   s.add_dependency("eeepub")
 
+  # parsing
+  s.add_dependency("nokogiri")
+
+  # storage
   s.add_dependency("redis")
 end

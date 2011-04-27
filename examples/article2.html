@@ -1,0 +1,77 @@
+<div><div class="entry-content">
+						<p>I was a Java guy for 10 years and I&#8217;ve been a Rubyist for the last 5 years.  Over the years, I&#8217;ve tried to develop expertise in a particular area of technology that will both pay the bills and make me happy as a programmer while also watching for upcoming changes in the tech world.  I often find myself diving into a particular technology just to get my hands dirty and get a feel for its strengths and weaknesses.  As my JavaScript skills have always been weak, I&#8217;ve decided to deep dive into <a href="http://nodejs.org" rel="nofollow">Node.js</a> to understand what it does well and improve my JavaScript skills at the same time.</p>
+<p>For this post, I&#8217;m just going to cover the basics; I&#8217;ll follow up soon with deeper posts.<br></p>
+<h2>Overview</h2>
+<p>JavaScript has an interesting history &#8211; it hasn&#8217;t developed like most other languages; until recently, executing JavaScript meant embedding it in a web page for a browser to execute.  A few things happened which radically hastened the rise in JavaScript as an reasonable server-side language:</p>
+<ul><li>AJAX and the Browser Wars have resulted in dramatic improvements in Javascript runtime performance and high-quality developer tools.</li>
+<li>Node.js built Process, File and Network I/O APIs on top of Google&#8217;s <a href="http://code.google.com/p/v8/" rel="nofollow">V8 JavaScript engine</a>, allowing command line programs and daemons to be built in JavaScript.</li>
+</ul><p>Node.js adds a friendly command line face to V8 and APIs that are conceptually similar to Ruby&#8217;s EventMachine library: all I/O is asynchronous and threads are unavailable to user code.  Additionally JavaScript is a prototype-based language, not object-oriented.  This makes for a programming model that is radically different from what Ruby or Java developers are used to.</p>
+<h2>Installation</h2>
+<p>I&#8217;m going to assume OSX and I like to install things with <a href="http://mxcl.github.com/homebrew/" rel="nofollow">Homebrew</a>.  We&#8217;ll install node and npm, node&#8217;s package manager, with these commands:</p>
+<pre class="brush: bash;">
+    brew update # update Homebrew's formulas to the latest
+    brew install node # install node
+    curl http://npmjs.org/install.sh | sudo sh # install npm
+</pre>
+<p>Once installed, you should be able to run <code>node --help</code> and <code>npm --help</code>.</p>
+<p>A minimal web server using Node.js:</p>
+<pre class="brush: jscript;">
+var http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(8124, "127.0.0.1");
+</pre>
+<p>Copy that code into <code>hello.js</code> and run it:</p>
+<pre>
+node hello.js
+</pre>
+<p>Now let&#8217;s slam it with some requests:</p>
+<pre>
+ab -n 10000 -c 50 http://127.0.0.1:8124/
+</pre>
+<p>Results:</p>
+<pre>
+Server Hostname:        127.0.0.1
+Server Port:            8124
+Document Path:          /
+Document Length:        12 bytes
+Concurrency Level:      50
+Time taken for tests:   1.479 seconds
+Complete requests:      10000
+Failed requests:        0
+Write errors:           0
+Total transferred:      760000 bytes
+HTML transferred:       120000 bytes
+Requests per second:    6760.79 [#/sec] (mean)
+Time per request:       7.396 [ms] (mean)
+Time per request:       0.148 [ms] (mean, across all concurrent requests)
+Transfer rate:          501.78 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.2      0       3
+Processing:     1    7   3.6      7      20
+Waiting:        1    7   3.6      7      20
+Total:          1    7   3.6      7      22
+
+Percentage of the requests served within a certain time (ms)
+  50%      7
+  66%      9
+  75%     10
+  80%     11
+  90%     12
+  95%     13
+  98%     15
+  99%     16
+ 100%     22 (longest request)
+</pre>
+<p>Not bad.  Of course, this is using localhost and a trivial app but at least we know it&#8217;s up and running well.  In my next post, we&#8217;ll explore the Node.js source code itself.
+</p><div class="snap_nopreview sharing robots-nocontent">
+
+</div>
+											</div>
+
+
+					</div>
+

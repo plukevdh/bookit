@@ -1,0 +1,17 @@
+module Bookit
+  class Content
+    class Header < Base
+      attr_accessor :text
+
+      def initialize(text, options={})
+        @text = text
+
+        super options
+      end
+
+      def output
+        "HEADER: #{text}"
+      end
+    end
+  end
+end

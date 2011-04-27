@@ -1,18 +1,16 @@
+require './bookit/parser/html'
+
 module Bookit
-  class Article < PersistableObject
-    REQUIRED_ATTRS = [:author, :publish_date, :url, :content, :title]
-    attr_accessor *REQUIRED_ATTRS, :attributes
+  class Article 
+    BASE_ATTRS = [:author, :date_published, :url, :title]
+    attr_accessor *BASE_ATTRS, :attributes, :content
 
-    key 'bookit:article'
-
-    class << self
-
-    end
-
-    def initialize(attrs)
+    def initialize(attrs, parser=Bookit::Parser::Html)
       @attributes = {}
 
-      REQUIRED_ATTRS.each do |key|
+      @content = Content.new(attrs.delete('content'), parser) if attrs.include? 'content'
+
+      BASE_ATTRS.each do |key|
         self.send "#{key}=", attrs[key.to_s]
         @attributes[key.to_sym] = attrs.delete key
       end
@@ -20,19 +18,34 @@ module Bookit
       @attributes.merge! attrs unless attrs.empty?
     end
 
-    def to_pdf
-      Prawn::Document.generate "#{title} - #{author}.pdf" do 
-        self.font_size = 12
+    def method_missing(sym, *args, &block)
+      if @attributes[sym.to_s]
 
-        text title, size: 20, style: :bold
-        text author, size: 12, style: :bold
-        font_size 10 do
-          text publish_date
-          text url
+        # cache the method
+        self.class.class_eval do
+          attr_accessor sym
         end
 
-        text content
+        self.send "#{sym}=", @attributes[sym.to_s]
+
+        return @attributes.delete sym.to_s
+      else
+        super
       end
+    end
+
+    def to_pdf
+      pdf = Prawn::Document.new
+      pdf.font_size = 12
+
+      pdf.text @title, size: 20, style: :bold
+      pdf.text @author || "", size: 12, style: :bold
+      pdf.text @date_published || "", size: 10
+      pdf.text @url || "", size: 10
+      pdf.text "\n\n"
+      pdf.text @content
+      
+      pdf
     end
 
     def to_epub
@@ -42,6 +55,5 @@ module Bookit
     def to_mobi
       # not ready for this yet.
     end
-
   end
 end
