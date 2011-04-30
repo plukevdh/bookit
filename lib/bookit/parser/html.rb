@@ -13,24 +13,31 @@ module Bookit
       end
 
       def walk(element, tree)
-        return tree if element.nil?
-
+        return tree if element.nil? || element.content.strip.empty?
 
         tree << case element.name
+        when "p"
+          Bookit::Content::Paragraph.new(walk_children(element, []))
         when "text"
-          Bookit::Content::Paragraph.new(element.content)
+          Bookit::Content::Text.new(element.content.strip)
         when "h1", "h2", "h3", "h4"
-          Bookit::Content::Header.new(element.content)
+          Bookit::Content::Header.new(element.content.strip)
         when "a"
-          Bookit::Content::Link.new(element.attributes["href"].value, element.content)
+          Bookit::Content::Link.new(element.attributes["href"].value, walk_children(element, []))
         when "img"
           Bookit::Content::Image.new(element.attributes["src"].value)
         when "ul", "ol"
-          Bookit::Content::List.new(element.children.map(&:content))
+          Bookit::Content::List.new(walk_children(element, []))
         else
-          element.children.each {|child| walk(child, tree)}
-          return tree
+          walk_children(element, tree)
+          nil
         end
+
+        return tree
+      end
+      
+      def walk_children(element, tree)
+        element.children.inject(tree) {|past, child| walk(child, past)}
       end
     end
   end

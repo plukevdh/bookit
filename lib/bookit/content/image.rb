@@ -3,14 +3,16 @@ module Bookit
     class Image < Base
       attr_accessor :source
 
+      # takes a source url
       def initialize(source, options={})
         @source = source
 
         super options
       end
 
+      # returns the url to the image
       def render
-        source
+        block_given? ? yield(source) : source
       end
     end
   end

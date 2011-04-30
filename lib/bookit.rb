@@ -11,6 +11,7 @@ module Bookit
   class Content
     autoload :Base, './bookit/content/base'
     autoload :Paragraph, './bookit/content/paragraph'
+    autoload :Text, './bookit/content/text'
     autoload :Link, './bookit/content/link'
     autoload :Image, './bookit/content/image'
     autoload :Header, './bookit/content/header'
