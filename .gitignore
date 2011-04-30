@@ -2,6 +2,5 @@
 .bundle
 Gemfile.lock
 pkg/*
-lib/test.rb
 *.DS_Store
-
+lib/test.*
