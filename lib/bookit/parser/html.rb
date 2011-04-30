@@ -15,22 +15,22 @@ module Bookit
       def walk(element, tree)
         return tree if element.nil?
 
+
         tree << case element.name
         when "text"
           Bookit::Content::Paragraph.new(element.content)
         when "h1", "h2", "h3", "h4"
           Bookit::Content::Header.new(element.content)
         when "a"
-          Bookit::Content::Link.new(element.attributes["href"].value, 
-                                            element.content)
+          Bookit::Content::Link.new(element.attributes["href"].value, element.content)
         when "img"
           Bookit::Content::Image.new(element.attributes["src"].value)
         when "ul", "ol"
           Bookit::Content::List.new(element.children.map(&:content))
+        else
+          element.children.each {|child| walk(child, tree)}
+          return tree
         end
-        
-        element.children.each {|child| walk(child, tree)}
-        return tree
       end
     end
   end
