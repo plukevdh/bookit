@@ -5,7 +5,7 @@ module Bookit
       @attributes = options
     end
 
-    def output
+    def render
       inspect
     end
   end

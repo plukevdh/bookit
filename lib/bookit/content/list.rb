@@ -9,8 +9,8 @@ module Bookit
         super options
       end
 
-      def output
-        "list: #{items.join(", ")}"
+      def render
+        "#{items.join(",")}"
       end
     end
   end

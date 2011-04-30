@@ -1,59 +1,28 @@
 require './bookit/parser/html'
+require './bookit/emitter/pdf'
 
 module Bookit
   class Article 
-    BASE_ATTRS = [:author, :date_published, :url, :title]
-    attr_accessor *BASE_ATTRS, :attributes, :content
+    REQUIRED_ATTRS = [:author, :date_published, :url, :title, :content]
+    attr_accessor *REQUIRED_ATTRS, :attributes
 
     def initialize(attrs, parser=Bookit::Parser::Html)
-      @attributes = {}
+      @attributes = attrs.dup
 
-      @content = Content.new(attrs.delete('content'), parser) if attrs.include? 'content'
-
-      BASE_ATTRS.each do |key|
-        self.send "#{key}=", attrs[key.to_s]
-        @attributes[key.to_sym] = attrs.delete key
+      REQUIRED_ATTRS.each do |key|
+        raise "Required attribute #{key} not found." unless @attributes[key]
+        self.send "#{key}=", @attributes[key]
       end
 
-      @attributes.merge! attrs unless attrs.empty?
+      # parse raw content into array of generic content
+      @content = Content.new(@content, parser)
     end
 
-    def method_missing(sym, *args, &block)
-      if @attributes[sym.to_s]
-
-        # cache the method
-        self.class.class_eval do
-          attr_accessor sym
-        end
-
-        self.send "#{sym}=", @attributes[sym.to_s]
-
-        return @attributes.delete sym.to_s
-      else
-        super
-      end
-    end
-
-    def to_pdf
-      pdf = Prawn::Document.new
-      pdf.font_size = 12
-
-      pdf.text @title, size: 20, style: :bold
-      pdf.text @author || "", size: 12, style: :bold
-      pdf.text @date_published || "", size: 10
-      pdf.text @url || "", size: 10
-      pdf.text "\n\n"
-      pdf.text @content
-      
-      pdf
-    end
-
-    def to_epub
-      #not ready for this yet.
-    end
-
-    def to_mobi
-      # not ready for this yet.
+    # Article's to print method outputs the given input content into the given
+    # emitter document type. We output PDF by default.
+    def to_print(emitter_class=Bookit::Emitter::Pdf)
+      emitter = emitter_class.send 'new', self
+      emitter.generate
     end
   end
 end

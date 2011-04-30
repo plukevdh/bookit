@@ -9,7 +9,7 @@ module Bookit
         super options
       end
 
-      def output 
+      def render 
         text
       end
     end

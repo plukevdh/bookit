@@ -10,8 +10,8 @@ module Bookit
         super options
       end
 
-      def output
-        "#{text}: (#{url})"
+      def render
+        block_given? ? yield(text, url) : "#{text}:#{url}"
       end
     end
   end

@@ -20,5 +20,10 @@ module Bookit
   class Parser
     autoload :Html, './bookit/parser/html'
   end
+
+  class Emitter
+    autoload :Base, './bookit/emitter/base'
+    autoload :Pdf, './bookit/emitter/pdf'
+  end
 end
 

@@ -8,6 +8,10 @@ module Bookit
 
         super options
       end
+
+      def render
+        source
+      end
     end
   end
 end

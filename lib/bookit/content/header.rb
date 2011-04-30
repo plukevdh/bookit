@@ -9,8 +9,8 @@ module Bookit
         super options
       end
 
-      def output
-        "HEADER: #{text}"
+      def render
+        text
       end
     end
   end
