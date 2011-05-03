@@ -35,7 +35,9 @@ module Bookit
       end
 
       def output(group)
+        return if group[0] == 'image'
         group[2] = {inline_format: true}
+
         @pdf.send *group.flatten
         @pdf.text("\n")
       end
@@ -51,7 +53,8 @@ module Bookit
       # render images on finding them. not embeddable within a paragraph for now.
       def render_image(img)
         @pdf.image *img
-        ["text"]
+        @pdf.text "\n"
+        ["image"]
       end
 
       def render_header(text)
