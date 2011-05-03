@@ -1,5 +1,5 @@
-require './bookit/parser/html'
-require './bookit/emitter/pdf'
+require 'bookit/parser/html'
+require 'bookit/emitter/pdf'
 
 module Bookit
   class Article 

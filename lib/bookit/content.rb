@@ -7,13 +7,13 @@ module Bookit
     attr_reader :raw_content
     attr_accessor :formatted_content
 
-    autoload :Generic,          './bookit/content/generic'
-    autoload :Paragraph,        './bookit/content/paragraph'
-    autoload :Text,             './bookit/content/text'
-    autoload :Link,             './bookit/content/link'
-    autoload :Image,            './bookit/content/image'
-    autoload :Header,           './bookit/content/header'
-    autoload :List,             './bookit/content/list'
+    autoload :Generic,          'bookit/content/generic'
+    autoload :Paragraph,        'bookit/content/paragraph'
+    autoload :Text,             'bookit/content/text'
+    autoload :Link,             'bookit/content/link'
+    autoload :Image,            'bookit/content/image'
+    autoload :Header,           'bookit/content/header'
+    autoload :List,             'bookit/content/list'
 
     TYPES = {
       paragraph: Content::Paragraph,

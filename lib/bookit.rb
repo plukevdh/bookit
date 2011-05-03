@@ -3,22 +3,22 @@ module Bookit
   require 'eeepub'
   require 'redis'
 
-  autoload :PersistableObject,  './bookit/persistable_object'
-  autoload :Article,            './bookit/article'
-  autoload :Parser,             './bookit/parser'
-  autoload :Content,            './bookit/content'
+  autoload :PersistableObject,  'bookit/persistable_object'
+  autoload :Article,            'bookit/article'
+  autoload :Parser,             'bookit/parser'
+  autoload :Content,            'bookit/content'
 
   class Content
-    autoload :Generic,          './bookit/content/generic'
+    autoload :Generic,          'bookit/content/generic'
   end
 
   class Parser
-    autoload :Html,             './bookit/parser/html'
+    autoload :Html,             'bookit/parser/html'
   end
 
   class Emitter
-    autoload :Abstract,         './bookit/emitter/abstract'
-    autoload :Pdf,              './bookit/emitter/pdf'
+    autoload :Abstract,         'bookit/emitter/abstract'
+    autoload :Pdf,              'bookit/emitter/pdf'
   end
 end
 
