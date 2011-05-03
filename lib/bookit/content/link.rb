@@ -13,8 +13,7 @@ module Bookit
       end
 
       def render
-        output = [@url, @objects.map(&:render)]
-        block_given? ? yield(output) : output.flatten.join(":")
+        [@url, @objects.map(&:render)]
       end
     end
   end

@@ -7,10 +7,21 @@ module Bookit
     attr_reader :raw_content
     attr_accessor :formatted_content
 
-    def self.define_render(type, &block)
-      klass = Generic::TYPES[type]
-      klass.define_method :render, block
-    end
+    autoload :Generic,          './bookit/content/generic'
+    autoload :Paragraph,        './bookit/content/paragraph'
+    autoload :Text,             './bookit/content/text'
+    autoload :Link,             './bookit/content/link'
+    autoload :Image,            './bookit/content/image'
+    autoload :Header,           './bookit/content/header'
+    autoload :List,             './bookit/content/list'
+
+    TYPES = {
+      paragraph: Content::Paragraph,
+      image:     Content::Image,
+      header:    Content::Header,
+      link:      Content::Link,
+      list:      Content::List
+    }
 
     def initialize(raw_content, parser)
       @raw_content = raw_content

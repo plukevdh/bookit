@@ -1,6 +1,8 @@
+require 'open-uri'
+
 module Bookit
   class Content
-    class Image
+    class Image < Generic
       attr_accessor :source
 
       # takes a source url
@@ -12,7 +14,7 @@ module Bookit
 
       # returns the url to the image
       def render
-        block_given? ? yield(source) : source
+        [open(source), attributes]
       end
     end
   end

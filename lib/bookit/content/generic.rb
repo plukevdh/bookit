@@ -1,14 +1,7 @@
 module Bookit
   class Content::Generic
     attr_accessor :attributes
-
-    TYPES = {
-      paragraph: Content::Paragraph,
-      image:     Content::Image,
-      header:    Content::Header,
-      link:      Content::Link
-    }
-    
+ 
     # Content can always take options. These can usually be used 
     # to add additional formatting information for the Emitters
     def initialize(options={})
@@ -29,7 +22,7 @@ module Bookit
 
     # returns true if this symbol is tied to the class type
     def is_type? sym
-      self.class == TYPES[sym]
+      self.class == Content::TYPES[sym]
     end
   end
 end

@@ -19,9 +19,7 @@ module Bookit
         
         # have all our type renderers raise an error unless defined in the subclass.
         Bookit::Content::TYPES.each do |type|
-          define_method "render_#{type}".to_sym do
-            raise_abstract
-          end
+          self.class.send(:define_method, "render_#{type}".to_sym, -> { raise_abstract })
         end
 
       end  

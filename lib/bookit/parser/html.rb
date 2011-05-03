@@ -13,7 +13,7 @@ module Bookit
       end
 
       def walk(element, tree)
-        return tree if element.nil? || element.content.strip.empty?
+        return tree if element.nil? || (element.content.strip.empty? if element.name != "img")
 
         tree << case element.name
         when "p"
@@ -25,7 +25,10 @@ module Bookit
         when "a"
           Bookit::Content::Link.new(element.attributes["href"].value, walk_children(element, []))
         when "img"
-          Bookit::Content::Image.new(element.attributes["src"].value)
+          attrs = {}
+          ['width', 'height'].each {|a| attrs[a.to_sym] = element.attributes[a] ? element.attributes[a].value.to_i : nil}
+
+          Bookit::Content::Image.new(element.attributes["src"].value, attrs)
         when "ul", "ol"
           Bookit::Content::List.new(walk_children(element, []))
         else

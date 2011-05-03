@@ -5,14 +5,14 @@ module Bookit
 
       # a List could contain text or links.
       def initialize(items, options={})
+        items.compact!
         @items = (items.class == Array) ? items : [items]
 
         super options
       end
 
       def render
-        output = @items.map &:render
-        block_given? ? yield(output) : output.join("\n")
+        @items
       end
     end
   end

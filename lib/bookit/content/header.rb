@@ -1,6 +1,6 @@
 module Bookit
   class Content
-    class Header
+    class Header < Generic
       attr_accessor :text
 
       # headers will only ever contain text, but usually contained separately
@@ -12,7 +12,7 @@ module Bookit
       end
 
       def render
-        block_given? ? yield(text) : text
+        text 
       end
     end
   end

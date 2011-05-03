@@ -10,12 +10,6 @@ module Bookit
 
   class Content
     autoload :Generic,          './bookit/content/generic'
-    autoload :Paragraph,        './bookit/content/paragraph'
-    autoload :Text,             './bookit/content/text'
-    autoload :Link,             './bookit/content/link'
-    autoload :Image,            './bookit/content/image'
-    autoload :Header,           './bookit/content/header'
-    autoload :List,             './bookit/content/list'
   end
 
   class Parser
@@ -23,7 +17,7 @@ module Bookit
   end
 
   class Emitter
-    autoload :Base,             './bookit/emitter/base'
+    autoload :Abstract,         './bookit/emitter/abstract'
     autoload :Pdf,              './bookit/emitter/pdf'
   end
 end
