@@ -16,11 +16,12 @@ module Bookit
       def initialize(article, options={})
         @article = article
         @options = DEFAULT_OPTIONS.merge(options)
+        define_render_outputs
       end
 
       private
-      def content_render(object, action)
-        action object.render
+      def define_render_outputs
+        raise "Base Emitter - no output types defined"
       end
     end
   end

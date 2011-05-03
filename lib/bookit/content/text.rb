@@ -1,6 +1,6 @@
 module Bookit
   class Content
-    class Text < Base
+    class Text < Generic
       attr_accessor :text
 
       def initialize(text, options={})

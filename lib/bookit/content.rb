@@ -4,18 +4,25 @@
 
 module Bookit
   class Content
-    attr_reader :raw_content, :parser_class
+    attr_reader :raw_content
     attr_accessor :formatted_content
 
-    def initialize(raw_content, parser)
-      @parser_class = parser
-      @raw_content = raw_content
-      @formatted_content = create_abstract
+    def self.define_render(type, &block)
+      klass = Generic::TYPES[type]
+      klass.define_method :render, block
     end
 
-    def create_abstract
-      parser = @parser_class.send 'new'
-      parser.parse(raw_content)
+    def initialize(raw_content, parser)
+      @raw_content = raw_content
+      @formatted_content = parser.new.parse(raw_content)
     end
+
+    # #render for any Content object should always return a string
+    # it is also possible to pass a block to render actions so that
+    # you can fine-tune the content output from your Emitters
+    def render
+      @formatted_content.each &:render
+    end
+
   end
 end

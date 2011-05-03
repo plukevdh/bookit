@@ -10,7 +10,7 @@ module Bookit
           :Title => @article.title,
           :CreationDate => @article.date_published,
           :Author => @article.author,
-          :Source => @article.url}, 
+          :Source => @article.url }, 
           margin: 0.5.in, page_size: 'LEGAL')
 
         pdf.font_size = options[:font_size]
@@ -23,22 +23,17 @@ module Bookit
         
         pdf.text "\n\n"
         
-        @article.content.formatted_content.each do |item|
-          case item
-          when Bookit::Content::Paragraph
-            pdf.text item.render
-          when Bookit::Content::Image
-            pdf.image open(item.render)
-          when Bookit::Content::Header
-            pdf.text item.render, size: options[:header_size]
-          when Bookit::Content::Link
-            pdf.text "<color rgb='#0000ff'><u><link href='#{item.url}'>#{item.text}</link></u></color>", inline_format: true
-          when Bookit::Content::List
-            pdf.text item.items.join(", ")
-          end
-        end
-
+        @article.content.render
         pdf
+      end
+
+      private
+      def define_render_outputs
+        define_render :paragraph {|items|  pdf.text items}
+        define_render :image {|source| pdf.image open(source)}
+        define_render :header {|text| pdf.text text, size: options[:header_size]}
+        define_render :link {|url, linkable| pdf.text "<color rgb='#0000ff'><u><link href='#{url}'>#{linkable}</link></u></color>", inline_format: true}
+        define_render :list {|items| items.each {|i| pdf.text "- #{i}"} }
       end
     end
   end

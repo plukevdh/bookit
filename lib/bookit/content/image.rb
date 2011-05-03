@@ -1,6 +1,6 @@
 module Bookit
   class Content
-    class Image < Base
+    class Image
       attr_accessor :source
 
       # takes a source url

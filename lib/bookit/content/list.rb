@@ -1,11 +1,11 @@
 module Bookit
   class Content
-    class List < Base
+    class List < Generic
       attr_accessor :items
 
       # a List could contain text or links.
       def initialize(items, options={})
-        @items = items
+        @items = (items.class == Array) ? items : [items]
 
         super options
       end

@@ -1,6 +1,6 @@
 module Bookit
   class Content
-    class Header < Base
+    class Header
       attr_accessor :text
 
       # headers will only ever contain text, but usually contained separately

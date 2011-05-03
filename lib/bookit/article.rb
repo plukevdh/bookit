@@ -20,9 +20,8 @@ module Bookit
 
     # Article's to print method outputs the given input content into the given
     # emitter document type. We output PDF by default.
-    def to_print(emitter_class=Bookit::Emitter::Pdf)
-      emitter = emitter_class.send 'new', self
-      emitter.generate
+    def to_print(emitter=Bookit::Emitter::Pdf)
+      emitter.new(self).generate
     end
   end
 end
