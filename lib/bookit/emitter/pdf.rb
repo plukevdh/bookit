@@ -41,7 +41,7 @@ module Bookit
       end
 
       def render_paragraph(items)
-        ["text", items.map {|i| render(i)[1..-1]}.join("")]
+        ["text", items.map {|i| render(i)[1..-1]}.join(" ")]
       end 
 
       def render_text(text)
