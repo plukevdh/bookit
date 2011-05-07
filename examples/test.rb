@@ -1,8 +1,8 @@
-$: << '../lib/'
+$: << './lib/'
 require 'bookit'
 
 base = {
-  content: File.read('../examples/article3.html'),
+  content: File.read('./examples/article3.html'),
   author: "What?",
   title: "Who?",
   date_published: Time.now.to_s,
@@ -11,6 +11,4 @@ base = {
 
 a = Bookit::Article.new(base, Bookit::Parser::Html)
 
-puts a.content.formatted_content
-
-a.to_print(Bookit::Emitter::Pdf).render_file("test.pdf")
+a.to_print(Bookit::Emitter::Epub)
