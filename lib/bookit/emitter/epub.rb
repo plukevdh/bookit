@@ -36,9 +36,7 @@ module Bookit
           files       [File.expand_path(tfile.path)]
         end
 
-        puts File.expand_path(tfile.path)
-
-        epub.save("#{@article.title}.epub")
+        epub
       end
     end
   end
