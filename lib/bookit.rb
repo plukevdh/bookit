@@ -19,6 +19,7 @@ module Bookit
   class Emitter
     autoload :Abstract,         'bookit/emitter/abstract'
     autoload :Pdf,              'bookit/emitter/pdf'
+    autoload :Epub,             'bookit/emitter/epub'
   end
 end
 
