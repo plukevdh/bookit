@@ -13,7 +13,7 @@ module Bookit
               <b>#{@article.author}</b>
               <br/>
               <i>
-                  #{Time.parse(@article.date_published).strftime("%d/%m/%Y")}
+                  #{@article.date_published}
                   <br/>
                   #{@article.url}
               </i>
