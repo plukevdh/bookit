@@ -20,6 +20,7 @@ module Bookit
     autoload :Abstract,         'bookit/emitter/abstract'
     autoload :Pdf,              'bookit/emitter/pdf'
     autoload :Epub,             'bookit/emitter/epub'
+    autoload :Mobi,             'bookit/emitter/mobi'
   end
 end
 
