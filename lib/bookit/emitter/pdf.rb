@@ -1,6 +1,10 @@
 require 'prawn'
 require 'prawn/measurement_extensions'
 
+module Prawn::Document
+  alias :save :render_file
+end
+
 module Bookit
   class Emitter
     class Pdf < Abstract
