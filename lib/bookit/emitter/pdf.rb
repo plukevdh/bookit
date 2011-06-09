@@ -1,7 +1,7 @@
 require 'prawn'
 require 'prawn/measurement_extensions'
 
-module Prawn::Document
+class ::Prawn::Document
   alias :save :render_file
 end
 
