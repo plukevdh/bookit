@@ -7,6 +7,7 @@ module Bookit
 
       def initialize(url, objects, options={})
         @url = url
+        objects.compact!
         @objects = (objects.class == Array) ? objects : [objects]
 
         super options
